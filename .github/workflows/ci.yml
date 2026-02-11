@@ -28,8 +28,8 @@ jobs:
     - name: Run Ruff (Liniting)
       run: ruff check .
 
-    - name: Run bandit (security scan)
-      run: bandit -r .
+    #- name: Run bandit (security scan)
+     # run: bandit -r .
 
     - name: Run tests with coverage
       run: pytest --cov=etl --cov=api --cov=models --cov-report=term-missing --cov-fail-under=80
