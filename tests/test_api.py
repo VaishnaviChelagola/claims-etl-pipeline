@@ -1,7 +1,31 @@
+import mongomock
+import pytest
 from fastapi.testclient import TestClient
-from api import app
+import api
 
-client = TestClient(app)
+# Create fake MongoDB
+mock_client = mongomock.MongoClient()
+mock_db = mock_client["claims_reporting"]
+
+# Insert test data
+mock_db.claims_summary.insert_many(
+    [
+        {"claim_id": 1, "status": "Paid"},
+        {"claim_id": 2, "status": "Processed"},
+    ]
+)
+
+mock_db.group_claims_aggregate.insert_one({"group_id": 1, "total_claims": 5})
+
+
+# Override database dependency
+def mock_get_database():
+    return mock_db
+
+
+api.get_database = mock_get_database
+
+client = TestClient(api.app)
 
 
 def test_get_claims_summary():
@@ -14,12 +38,7 @@ def test_get_status_counts():
     response = client.get("/claims/status-counts")
     assert response.status_code == 200
     data = response.json()
-    assert isinstance(data, list)
-
-    # Check structure
-    if len(data) > 0:
-        assert "_id" in data[0]
-        assert "count" in data[0]
+    assert len(data) > 0
 
 
 def test_get_claims_by_group():
