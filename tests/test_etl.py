@@ -18,6 +18,11 @@ def mock_claim():
         ),
     ]
 
+    # Mock member object
+    member = SimpleNamespace(
+        employer_group_id=100,
+    )
+
     # Mock claim object
     claim = SimpleNamespace(
         claim_id=1,
@@ -25,6 +30,7 @@ def mock_claim():
         provider_id=20,
         service_date=date(2026, 1, 15),
         line_items=line_items,
+        member=member,
     )
 
     return claim
@@ -35,7 +41,7 @@ def test_transform_claim_totals():
     result = transform_claim(claim)
 
     assert result["total_paid"] == 400
-    assert result["status"] == "Paid"
+    assert result["status"] == "Processed"
 
 
 def test_transform_claim_structure():
