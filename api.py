@@ -13,7 +13,7 @@ def get_claims_summary():
 
 @app.get("/claims/by-group/{group_id}")
 def get_claims_by_group(group_id: int):
-    return list(db.group_claims_aggregate.find({"group_id": group_id}, {"_id": 0}))
+    return list(db.claims_summary.find({"employer_group_id": group_id}, {"_id": 0}))
 
 
 @app.get("/claims/status-counts")
