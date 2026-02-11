@@ -18,4 +18,4 @@ COPY . .
 EXPOSE 8000
 
 # Default command (can change based on use case)
-CMD ["python", "api.py"]
+CMD ["uvicorn","api:app","--host","0.0.0.0","--port","8080"]
