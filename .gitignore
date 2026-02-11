@@ -24,7 +24,6 @@ htmlcov/
 
 # Database dumps or local data
 *.db
-*.sql
 *.sqlite
 
 # OS-specific files
