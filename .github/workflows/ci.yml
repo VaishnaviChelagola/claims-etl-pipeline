@@ -34,15 +34,4 @@ jobs:
     - name: Run tests with coverage
       run: pytest --cov=etl --cov=api --cov=models --cov-report=term-missing --cov-fail-under=80
 
-    - name: Log in to Docker Hub
-      uses: docker/login-action@v3
-      with:
-        username: ${{ secrets.prashanthiakka }}
-        password: ${{ secrets.Prashanthi1234# }}
-
-    - name: Build and push Docker image
-      uses: docker/build-push-action@v5
-      with:
-        context: .
-        push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/claims-pipeline:latest
+      
